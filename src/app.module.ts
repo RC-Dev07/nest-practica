@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { EmployeesModule } from './employees/employees.module';
 
 @Module({
   imports: [
@@ -16,7 +17,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       autoLoadEntities: true,
       synchronize: true, // Que se migre automaticamente solo en desarrollo si ya se tien una base de datos
     }),
-    UsersModule],
+    UsersModule,
+    EmployeesModule],
   controllers: [AppController],
   providers: [AppService],
 })
