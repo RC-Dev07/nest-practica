@@ -9,12 +9,10 @@ import { Repository } from 'typeorm';
 export class UsersService {
 
   constructor(
-    @InjectRepository(User) private readonly  userRepository: Repository<User>
+    @InjectRepository(User) private readonly userRepository: Repository<User>
   ) { }
 
   async create(createUserDto: CreateUserDto) {
-    const existEmail = await this.userRepository.findOne({ where: { email: createUserDto.email } });
-    if (existEmail) throw new BadRequestException('El email ya esta registrado')
     const user = this.userRepository.create(createUserDto);
     return this.userRepository.save(user);
   }
@@ -39,5 +37,9 @@ export class UsersService {
     const result = await this.userRepository.softDelete(id);
     if (result.affected === 0) throw new NotFoundException(`El usuario con el id ${id} no existe`)
     return { message: `Usuario eliminado correctamente` }
+  }
+
+  async findOneByEmail(email: string) {
+    return await this.userRepository.findOne({ where: { email } });
   }
 }
