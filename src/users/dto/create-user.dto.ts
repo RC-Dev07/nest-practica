@@ -1,4 +1,5 @@
-import { IsEmail, IsOptional, IsString } from 'class-validator';
+import { IsEmail, IsEnum, IsOptional, IsString } from 'class-validator';
+import { Role } from 'src/auth/enums/rol.enum';
 
 export class CreateUserDto {
 
@@ -11,7 +12,6 @@ export class CreateUserDto {
     @IsString({ message: 'La contraseña debe ser un texto' })
     password: string;
 
-    @IsOptional()
-    @IsString({ message: 'El rol debe ser un texto' })
-    rol?: string;
+    @IsEnum(Role, { message: `El rol debe ser uno de los siguientes: ${Object.values(Role).join(', ')}` })
+    role?: Role;
 }

@@ -1,4 +1,5 @@
-import { IsEmail, IsOptional, IsString, MinLength } from "class-validator";
+import { IsEmail, IsEnum, IsOptional, IsString, MinLength } from "class-validator";
+import { Role } from "../enums/rol.enum";
 
 export class RegisterDto {
 
@@ -12,7 +13,6 @@ export class RegisterDto {
     @MinLength(6)
     password: string;
 
-    @IsString()
-    @IsOptional()
-    rol: string;
+   @IsEnum(Role, { message: `El rol debe ser uno de los siguientes: ${Object.values(Role).join(', ')}` })
+    role?: Role;
 }

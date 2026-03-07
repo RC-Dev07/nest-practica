@@ -1,11 +1,15 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
+import { Auth } from 'src/auth/decorators/auth.decorator';
+import { Role } from 'src/auth/enums/rol.enum';
+import { AuthGuard } from 'src/auth/guards/auth.guard';
+import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
 import { EmployeesService } from './employees.service';
-import { AuthGuard } from 'src/auth/auth.guard';
 
-@UseGuards(AuthGuard)
+@Auth(Role.ADMIN)
 @Controller('employees')
+@UseGuards(AuthGuard, RolesGuard)
 export class EmployeesController {
   constructor(private readonly employeesService: EmployeesService) { }
 
